@@ -374,6 +374,7 @@ static const CGFloat kDefaultHideInterval = 2.0;
 
 - (void)setupViewsToShowInWindow
 {
+    #ifndef AFM_IS_APP_EXTENSION
     // If there isn't a navigation controller with a bar, show in window instead.
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];
     CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
@@ -382,6 +383,13 @@ static const CGFloat kDefaultHideInterval = 2.0;
 
     self.additionalTopSpacing = statusBarHeight;
     self.targetView = window;
+    #else
+    if (self.appExtensionSetupBlock)
+    {
+        __weak AFMInfoBanner *weakSelf = self;
+        self.appExtensionSetupBlock(weakSelf);
+    }
+    #endif
 }
 
 - (void)hide
