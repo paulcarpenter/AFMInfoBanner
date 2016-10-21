@@ -455,10 +455,12 @@ static const CGFloat kDefaultHideInterval = 2.0;
 
 + (void)hideAll
 {
+#ifndef AFM_IS_APP_EXTENSION
     UINavigationController *navVC = [[[CVKHierarchySearcher alloc] init] topmostNavigationController];
     [self hideAllInView:navVC.navigationBar.superview];
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];
     [self hideAllInView:window];
+#endif
 }
 
 + (void)hideAllInView:(UIView *)view
